@@ -1,0 +1,54 @@
+/* #print-section,
+#print-section *,
+.print-page,
+.print-page * {
+    display: none;
+} */
+
+.print-page {
+    width: 24%;
+    margin: 5px;
+}
+
+#print-container {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+/* скриває всі елементи корім тих що треба для друку */
+@media print {
+    body * {
+        visibility: hidden;
+        position: absolute;
+
+    }
+
+    #print-container,
+    #print-container *,
+    .print-page,
+    .print-page * {
+        visibility: visible;
+        position: relative;
+    }
+
+
+}
+
+/* стилізація для вікна друку */
+@media print {
+    #print-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .print-page {
+        width: 31.5%;
+        padding: 0;
+        font-size: 100%;
+        line-height: 1.5;
+        border: 1px solid black;
+    }
+}
