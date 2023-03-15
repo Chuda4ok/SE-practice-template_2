@@ -28,7 +28,7 @@ body {
   background-color: #4b979c;
 }
 
-.header > p {
+.header>p {
   font-size: 24px;
   color: #424347;
 }
@@ -90,8 +90,8 @@ body {
   transition: 0.5s;
 }
 
-.inputBox input:valid ~ span,
-.inputBox input:focus ~ span {
+.inputBox input:valid~span,
+.inputBox input:focus~span {
   color: #4b979c;
   transform: translateX(-6px) translateY(-40px);
   font-size: 16px;
@@ -109,8 +109,8 @@ body {
   pointer-events: none;
 }
 
-.inputBox input:valid ~ i,
-.inputBox input:focus ~ i {
+.inputBox input:valid~i,
+.inputBox input:focus~i {
   height: 43px;
   border-radius: 4px;
 }
@@ -140,10 +140,12 @@ body {
   z-index: 2;
   font-size: 20px;
 }
+
 .inputClick {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
+
 .inputBoxList::placeholder {
   color: #424347;
 }
@@ -240,7 +242,7 @@ body {
   height: 450px;
 }
 
-.containerSetting > button {
+.containerSetting>button {
   width: 250px;
   height: 50px;
   background-color: #4b979c;
@@ -255,3 +257,73 @@ body {
   margin: 5px;
 }
 
+.lable-image {
+  padding: 13.5px 50px;
+  background-color: #4b979c;
+  border: none;
+  border-radius: 5px;
+  color: #424347;
+  font-size: 18px;
+}
+
+#image-input {
+  position: absolute;
+}
+
+.containet-input-image {
+  visibility: hidden;
+}
+
+.container-color {
+  visibility: hidden;
+}
+
+#color {
+  position: absolute;
+}
+
+#date {
+  color: transparent;
+}
+
+#date:valid,
+#date:focus {
+  color: #28282e;
+}
+
+#date::-webkit-inner-spin-button,
+#date::-webkit-calendar-picker-indicator {
+  position: absolute;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+}
+
+#time {
+  color: transparent;
+}
+
+#time:valid,
+#time:focus {
+  color: #28282e;
+}
+
+#time::-webkit-inner-spin-button,
+#time::-webkit-calendar-picker-indicator {
+  position: absolute;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+}
+
+.print-page {
+
+  padding: 10px 5px;
+  border: 1px solid black;
+  border-radius: 20px;
+
+}
+
+.xz {
+  word-wrap: break-word;
+}
