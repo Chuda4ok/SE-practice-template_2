@@ -1,3 +1,4 @@
+
 const settingsIcon = document.querySelector(".settingsIcon");
 const settings = document.querySelector(".settings");
 const containerSettings = document.querySelector(".containerSetting");
@@ -5,22 +6,29 @@ const printContainet = document.querySelector("#print-container");
 const defaultColorText = document.querySelector("#color-text");
 const defaultBgColor = document.querySelector("#color");
 const premerDiv = document.querySelector(".bg");
-const printButton = document.getElementById('print-btn');
-const imageInput = document.querySelector("#image-input")
-const downloadButton = document.querySelector('#download');
+const printButton = document.getElementById("print-btn");
+const imageInput = document.querySelector("#image-input");
+const downloadButton = document.querySelector("#download");
+const timeRegex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+const spanTeach = document.querySelector(".span-teach");
+const spanGroup = document.querySelector(".span-group");
+const spanDate = document.querySelector(".span-date");
+const spanTime = document.querySelector(".span-time");
 
-let date = '';
-let color = '';
-let teach = '';
-let agenda = '';
-let time = '';
-let grup = '';
-let nameString = '';
+let date = "";
+let color = "";
+let teach = "";
+let agenda = "";
+let time = "";
+let grup = "";
+let nameString = "";
 let file;
 
-imageInput.addEventListener('change', () => {
-  file = imageInput.files[0]
-  premerDiv.style.backgroundImage = `url(${URL.createObjectURL(imageInput.files[0])})`;
+imageInput.addEventListener("change", () => {
+  file = imageInput.files[0];
+  premerDiv.style.backgroundImage = `url(${URL.createObjectURL(
+    imageInput.files[0]
+  )})`;
   premerDiv.style.backgroundSize = "cover";
   premerDiv.style.backgroundPosition = "center";
 });
@@ -33,17 +41,36 @@ settingsIcon.onclick = function () {
   containerSettings.classList.toggle("active");
 };
 
-
-document.querySelector("#date").addEventListener('input', (e) => date = e.target.value);
-document.querySelector("#teach").addEventListener('input', (e) => teach = e.target.value);
-document.querySelector("#agenda").addEventListener('input', (e) => agenda = e.target.value);
-document.querySelector("#color").addEventListener('input', (e) => color = e.target.value);
-document.querySelector("#grup").addEventListener('input', (e) => (
-  grup = e.target.value = e.target.value.slice(0, 2)
-));
-document.querySelector("#surname").addEventListener('input', (e) => (
-  nameString = e.target.value = e.target.value.slice(0, 120)
-));
+document
+  .querySelector("#date")
+  .addEventListener("input", (e) => (date = e.target.value));
+document
+  .querySelector("#time")
+  .addEventListener("input", (e) => (time = e.target.value));
+document
+  .querySelector("#teach")
+  .addEventListener("input", (e) => (teach = e.target.value));
+document
+  .querySelector("#agenda")
+  .addEventListener(
+    "input",
+    (e) => (agenda = e.target.value = e.target.value.slice(0, 85))
+  );
+document
+  .querySelector("#color")
+  .addEventListener("input", (e) => (color = e.target.value));
+document
+  .querySelector("#grup")
+  .addEventListener(
+    "input",
+    (e) => (grup = e.target.value = e.target.value.slice(0, 2))
+  );
+document
+  .querySelector("#surname")
+  .addEventListener(
+    "input",
+    (e) => (nameString = e.target.value = e.target.value.slice(0, 1000))
+  );
 
 class CreateDocument {
   constructor() {
@@ -52,9 +79,9 @@ class CreateDocument {
     this.imageUrl;
   }
   createDocumentContainer() {
-    this.ducumentBlock = document.createElement('div')
-    this.ducumentBlock.classList.add("print-page")
-    return this.ducumentBlock
+    this.ducumentBlock = document.createElement("div");
+    this.ducumentBlock.classList.add("print-page");
+    return this.ducumentBlock;
   }
 
   createStyleDocument() {
@@ -69,15 +96,20 @@ class CreateDocument {
     this.createElement.innerHTML = `<div class="xz"> 
                                       <span class="title-page">Запрошення на батьківські збори</span> 
                                       <div class= "containet-text-page"> 
-                                        <p>Дата та час проведення: ${date} ${time}</p> 
+                                        <p>Дата проведення: ${date}</p>
+                                        <p>Час проведення:  ${time}</p> 
                                         <p>Номер групи: ${grup}</p> 
                                         <p>Керівник групи: ${teach}</p> 
-                                        ${agenda && `<p class="agenda">Питання порядку денного: ${agenda}</p>`}
-                                        <p>Отримувач: <span class="surn">${this.arrNames[i]}</span></p> 
+                                        ${agenda &&
+      `<p class="agenda">Питання порядку денного: ${agenda}</p>`
+      }
+                                        ${this.arrNames[i] &&
+      `<p>Отримувач: <span class="surn">${this.arrNames[i]}</span></p>`
+      } 
                                       </div> 
                                     </div>`;
 
-    this.createStyleDocument()
+    this.createStyleDocument();
     this.createElement.setAttribute("contenteditable", "true");
     if (file) {
       this.imageUrl = URL.createObjectURL(file);
@@ -97,30 +129,74 @@ class CreateDocument {
 
 class GenerateDocument extends CreateDocument {
   constructor() {
-    super()
+    super();
     this.arrNames;
-    this.arrDocument = []
+    this.arrDocument = [];
   }
   createDocumentContainer() {
-    return super.createDocumentContainer()
+    return super.createDocumentContainer();
   }
-
+  validateInput() {
+    if (teach.length == 0) {
+      spanTeach.classList.add("error");
+      alert("Введіть ПІБ керівника групи!");
+      return false;
+    }
+    if (grup.length !== 2) {
+      spanGroup.classList.add("error");
+      alert("Номер групи повинен містити 2 символа!");
+      return false;
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      spanDate.classList.add("error");
+      alert("Введіть дату!");
+      return false;
+    }
+    if (!timeRegex.test(time)) {
+      spanTime.classList.add("error");
+      alert("Введіть час!");
+      return false;
+    }
+    if (nameString.length > 1000) {
+      alert("Прізвища батьків повинні містити не більше 1000 символів!");
+      return false;
+    }
+    if (agenda.length > 85) {
+      alert(
+        "Перелік питань порядку денного повинний містити не більше 85 символів!"
+      );
+      return false;
+    }
+    spanTeach.classList.remove("error");
+    spanGroup.classList.remove("error");
+    spanTime.classList.remove("error");
+    spanDate.classList.remove("error");
+    return true;
+  }
   generate() {
-    this.arrNames = nameString?.split(",").map(name => name.trim());
+    if (!this.validateInput()) {
+      return [];
+    }
+    this.arrNames = nameString?.split(",").map((name) => name.trim());
     if (this.arrNames) {
       for (let i = 0; i < this.arrNames.length; i++) {
-        this.arrDocument.unshift(this.createDocument(i))
+        this.arrDocument.unshift(this.createDocument(i));
       }
     }
     return this.arrDocument;
   }
 
   print() {
+    let print_for = document.querySelectorAll('.print-page');
     let countPage = 0;
-    for (let i = 0; i < this.arrDocument.length; i++) {
-      countPage++
+    for (let i = 0; i < print_for.length; i++) {
+      print_for[i].classList.remove("page-break");
+    }
+    for (let i = 0; i < print_for.length; i++) {
+      countPage++;
       if (countPage == 6) {
-        this.arrDocument[i].classList.add("page-break")
+        print_for[i].classList.add("page-break");
+        countPage = 0;
       }
     }
     window.print();
@@ -130,7 +206,6 @@ class GenerateDocument extends CreateDocument {
     premerDiv.style.background = colorBg;
     if (this.arrDocument.length !== 0) {
       for (let i = 0; i < this.arrDocument.length; i++) {
-        console.log(colorBg, colorText)
         this.arrDocument[i].style.color = colorText;
         this.arrDocument[i].style.background = colorBg;
       }
@@ -138,11 +213,13 @@ class GenerateDocument extends CreateDocument {
   }
 
   download() {
-    const imageName = document.querySelectorAll('.surn');
+    const imageName = document.querySelectorAll(".surn");
     if (this.arrDocument.length !== 0) {
       for (let i = 0; i < this.arrDocument.length; i++) {
-        html2canvas(this.arrDocument[i]).then(canvas => {
-          let image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        html2canvas(this.arrDocument[i]).then((canvas) => {
+          let image = canvas
+            .toDataURL("image/png")
+            .replace("image/png", "image/octet-stream");
           let downloadLink = document.createElement("a");
           downloadLink.href = image;
           downloadLink.download = `${imageName[i].innerHTML}.png`;
@@ -161,32 +238,34 @@ class GenerateDocument extends CreateDocument {
   }
 }
 
-const generateDocument = new GenerateDocument()
+const generateDocument = new GenerateDocument();
 
-document.querySelector("#acceptButton").addEventListener('click', () => {
-  let documents = generateDocument.generate()
+document.querySelector("#acceptButton").addEventListener("click", () => {
+  let documents = generateDocument.generate();
   printContainet.prepend(...documents);
-})
-
-defaultBgColor.addEventListener('input', (e) => {
-  generateDocument.changeColor({ colorBg: e.target.value })
 });
 
-defaultColorText.addEventListener('input', (e) => {
-  generateDocument.changeColor({ colorText: e.target.value })
+defaultBgColor.addEventListener("input", (e) => {
+  generateDocument.changeColor({ colorBg: e.target.value });
 });
 
-printButton.addEventListener('click', () => {
-  generateDocument.print()
+defaultColorText.addEventListener("input", (e) => {
+  generateDocument.changeColor({ colorText: e.target.value });
 });
 
-downloadButton.addEventListener('click', () => {
-  generateDocument.download()
+printButton.addEventListener("click", () => {
+  generateDocument.print();
 });
 
-imageInput.addEventListener('change', () => {
-  generateDocument.changeImageBg(`url(${URL.createObjectURL(imageInput.files[0])})`)
-})
+downloadButton.addEventListener("click", () => {
+  generateDocument.download();
+});
+
+imageInput.addEventListener("change", () => {
+  generateDocument.changeImageBg(
+    `url(${URL.createObjectURL(imageInput.files[0])})`
+  );
+});
 
 const addEventListeners = (selector, iconClass) => {
   const icon = document.querySelector(iconClass);
