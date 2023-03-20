@@ -70,7 +70,7 @@ body {
 
 .inputBox input {
   position: relative;
-  width: 100%;
+  width: calc(100% - 15px);
   padding: 20px 10px 10px;
   background: transparent;
   border: none;
@@ -390,7 +390,7 @@ body {
 }
 
 .containet-text-page p {
-  margin-bottom: 24px;
+  margin-bottom: 15px;
 }
 
 /* скриває всі елементи корім тих що треба для друку */
@@ -412,6 +412,10 @@ body {
 
 /* стилізація для вікна друку */
 @media print {
+  #print-container {
+    background-color: transparent;
+  }
+
   .page-break {
     page-break-after: always;
   }
@@ -544,4 +548,7 @@ body {
 
 button {
   cursor: pointer;
+}
+.fontSize{
+  font-size: 20px;
 }
