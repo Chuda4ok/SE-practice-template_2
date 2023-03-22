@@ -91,23 +91,33 @@ class CreateDocument {
     printButton.classList.remove("disp-none");
   }
 
-
   createDocument(i) {
     this.createElement = this.createDocumentContainer();
     this.createElement.innerHTML = `<div class="xz"> 
                                       <div class= "containet-text-page"> 
                                         <p class="fontSize"> ${
                                           this.arrNames[i] &&
-                                          `Шановний(-на) <span class="surn">${this.arrNames[i]}</span>!`
+                                          `Шановний(-на) ${this.arrNames[i]}!`
                                         } Запрошуємо Вас на батьківські збори, що відбудуться ${date} о ${time}.</p>
                                         <p class="fontSize"> ${
-                                          agenda && agenda.length > 0 &&
+                                          agenda &&
+                                          agenda.length > 0 &&
                                           `Питання порядку денного зборів:
                                           <ol>
-                                            ${agenda.split(';').filter(Boolean).map((item, index) => `<li class="fontSize">${index + 1}. ${item}</li>`).join('')}
+                                            ${agenda
+                                              .split(";")
+                                              .slice(0, 5)
+                                              .filter(Boolean)
+                                              .map(
+                                                (item, index) =>
+                                                  `<li class="fontSize">${
+                                                    index + 1
+                                                  }. ${item}</li>`
+                                              )
+                                              .join("")}
                                           </ol>`
                                         }</p>
-                                        <p class="fontSize">Керівник ${grup} групи, ${teach}</p>
+                                        <div class="fontSize spaceBeet"><p class="m0 left">Керівник ${grup} групи</p><p class = 'right m0'> ${teach}</p>
                                         </div>
                                         </div>
                                         `;
@@ -161,13 +171,17 @@ class GenerateDocument extends CreateDocument {
       return false;
     }
     if (nameString.length > 1500) {
-      alert("Прізвища батьків повинні містити не більше 1000 символів!");
+      alert("Прізвища батьків повинні містити не більше 1500 символів!");
       return false;
     }
     if (agenda.length > 85) {
       alert(
         "Перелік питань порядку денного повинний містити не більше 85 символів!"
       );
+      return false;
+    }
+    if (agenda && agenda.split(';').length > 5) {
+      alert('Пунктов не может быть более 5!');
       return false;
     }
     spanTeach.classList.remove("error");

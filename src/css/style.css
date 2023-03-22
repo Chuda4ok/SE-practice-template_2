@@ -413,8 +413,10 @@ body {
 /* стилізація для вікна друку */
 @media print {
   #print-container {
-    background-color: transparent;
+    background-color: #ffff;
   }
+
+
 
   .page-break {
     page-break-after: always;
@@ -429,7 +431,10 @@ body {
     margin-top: -140px;
   }
 
+
+
   .print-page {
+    padding-bottom: 0;
     margin-right: 30px;
     margin-bottom: 15px;
     flex: 0 0 calc(40% - 12.5px);
@@ -470,6 +475,27 @@ body {
 }
 
 @media print {
+  .spaceBeet {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .spaceBeet {
+    position: absolute;
+  }
+
+  .left {
+    margin-bottom: 0;
+    top: 20px;
+  }
+
+  .right {
+    margin-bottom: 0;
+    text-align: right;
+    bottom: 26px;
+  }
+
   @page {
     size: auto;
     margin: 0;
@@ -549,6 +575,26 @@ body {
 button {
   cursor: pointer;
 }
-.fontSize{
+
+.fontSize {
   font-size: 20px;
+
+}
+
+.spaceBeet p {
+  display: block;
+}
+
+.spaceBeet {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.right {
+  text-align: right;
+}
+
+.m0 {
+  margin-bottom: 0;
 }
