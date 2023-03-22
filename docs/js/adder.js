@@ -1,4 +1,3 @@
-
 const settingsIcon = document.querySelector(".settingsIcon");
 const settings = document.querySelector(".settings");
 const containerSettings = document.querySelector(".containerSetting");
@@ -77,6 +76,7 @@ class CreateDocument {
     this.createElement;
     this.ducumentBlock;
     this.imageUrl;
+    this.arrDocumen = [];
   }
   createDocumentContainer() {
     this.ducumentBlock = document.createElement("div");
@@ -94,20 +94,33 @@ class CreateDocument {
   createDocument(i) {
     this.createElement = this.createDocumentContainer();
     this.createElement.innerHTML = `<div class="xz"> 
-                                      <span class="title-page">Запрошення на батьківські збори</span> 
                                       <div class= "containet-text-page"> 
-                                        <p>Дата проведення: ${date}</p>
-                                        <p>Час проведення:  ${time}</p> 
-                                        <p>Номер групи: ${grup}</p> 
-                                        <p>Керівник групи: ${teach}</p> 
-                                        ${agenda &&
-      `<p class="agenda">Питання порядку денного: ${agenda}</p>`
-      }
-                                        ${this.arrNames[i] &&
-      `<p>Отримувач: <span class="surn">${this.arrNames[i]}</span></p>`
-      } 
-                                      </div> 
-                                    </div>`;
+                                        <p class="fontSize"> ${
+                                          this.arrNames[i] &&
+                                          `Шановний(-на) ${this.arrNames[i]}!`
+                                        } Запрошуємо Вас на батьківські збори, що відбудуться ${date} о ${time}.</p>
+                                        <p class="fontSize"> ${
+                                          agenda &&
+                                          agenda.length > 0 &&
+                                          `Питання порядку денного зборів:
+                                          <ol>
+                                            ${agenda
+                                              .split(";")
+                                              .slice(0, 5)
+                                              .filter(Boolean)
+                                              .map(
+                                                (item, index) =>
+                                                  `<li class="fontSize">${
+                                                    index + 1
+                                                  }. ${item}</li>`
+                                              )
+                                              .join("")}
+                                          </ol>`
+                                        }</p>
+                                        <div class="fontSize spaceBeet"><p class="m0 left">Керівник ${grup} групи</p><p class = 'right m0'> ${teach}</p>
+                                        </div>
+                                        </div>
+                                        `;
 
     this.createStyleDocument();
     this.createElement.setAttribute("contenteditable", "true");
@@ -157,14 +170,18 @@ class GenerateDocument extends CreateDocument {
       alert("Введіть час!");
       return false;
     }
-    if (nameString.length > 1000) {
-      alert("Прізвища батьків повинні містити не більше 1000 символів!");
+    if (nameString.length > 1500) {
+      alert("Прізвища батьків повинні містити не більше 1500 символів!");
       return false;
     }
     if (agenda.length > 85) {
       alert(
         "Перелік питань порядку денного повинний містити не більше 85 символів!"
       );
+      return false;
+    }
+    if (agenda && agenda.split(';').length > 5) {
+      alert('Пунктов не может быть более 5!');
       return false;
     }
     spanTeach.classList.remove("error");
@@ -187,7 +204,7 @@ class GenerateDocument extends CreateDocument {
   }
 
   print() {
-    let print_for = document.querySelectorAll('.print-page');
+    let print_for = document.querySelectorAll(".print-page");
     let countPage = 0;
     for (let i = 0; i < print_for.length; i++) {
       print_for[i].classList.remove("page-break");
