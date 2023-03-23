@@ -95,7 +95,7 @@ class CreateDocument {
     this.createElement = this.createDocumentContainer();
     this.createElement.innerHTML = `<div class="xz"> 
                                       <div class= "containet-text-page"> 
-                                        <p class="fontSize"> ${
+                                        <p class="fontSize surn"> ${
                                           this.arrNames[i] &&
                                           `Шановний(-на) ${this.arrNames[i]}!`
                                         } Запрошуємо Вас на батьківські збори, що відбудуться ${date} о ${time}.</p>
@@ -153,6 +153,10 @@ class GenerateDocument extends CreateDocument {
     if (teach.length == 0) {
       spanTeach.classList.add("error");
       alert("Введіть ПІБ керівника групи!");
+      return false;
+    }
+    if (teach.length >= 40) {
+      alert("ПІБ керівника групи повинно містити не більше 40 символів!");
       return false;
     }
     if (grup.length !== 2) {

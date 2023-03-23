@@ -416,7 +416,9 @@ body {
     background-color: #ffff;
   }
 
-
+  .right {
+    margin-left: 60%;
+  }
 
   .page-break {
     page-break-after: always;
@@ -593,8 +595,13 @@ button {
 
 .right {
   text-align: right;
+  max-width: 200px;
+
 }
 
 .m0 {
   margin-bottom: 0;
+}
+input[type="image"] {
+  display: none;
 }
