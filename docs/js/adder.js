@@ -95,7 +95,7 @@ class CreateDocument {
     this.createElement = this.createDocumentContainer();
     this.createElement.innerHTML = `<div class="xz"> 
                                       <div class= "containet-text-page"> 
-                                        <p class="fontSize surn"> ${
+                                        <p class="fontSize"> ${
                                           this.arrNames[i] &&
                                           `Шановний(-на) ${this.arrNames[i]}!`
                                         } Запрошуємо Вас на батьківські збори, що відбудуться ${date} о ${time}.</p>
@@ -234,7 +234,6 @@ class GenerateDocument extends CreateDocument {
   }
 
   download() {
-    const imageName = document.querySelectorAll(".surn");
     if (this.arrDocument.length !== 0) {
       for (let i = 0; i < this.arrDocument.length; i++) {
         html2canvas(this.arrDocument[i]).then((canvas) => {
@@ -243,7 +242,7 @@ class GenerateDocument extends CreateDocument {
             .replace("image/png", "image/octet-stream");
           let downloadLink = document.createElement("a");
           downloadLink.href = image;
-          downloadLink.download = `${imageName[i].innerHTML}.png`;
+          downloadLink.download = `Батьківські збори.png`;
           downloadLink.click();
         });
       }
